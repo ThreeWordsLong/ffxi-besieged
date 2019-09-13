@@ -5,7 +5,8 @@ _addon.commands = {'besieged', 'bs'}
 
 timeit = require('timeit');
 timer = timeit.new()
-interval = 60
+interval = 300
+minimum_interval = 60
 requesting = false
 last_notification = nil
 
@@ -23,7 +24,7 @@ windower.register_event('load', function()
 end)
 
 windower.register_event('prerender', function()
-    if timer:check() >= interval then
+    if timer:check() >= interval and not requesting then
         requesting = true
         request_besieged_data()
         timer:next()
@@ -39,6 +40,13 @@ windower.register_event('addon command', function(...)
     else if args[0] == 'start' then
         timer:start()
         windower.add_to_chat(8, 'Besieged alerts resumed')
+    else if args[0] == 'interval' and args[1] then
+        if type(args[1]) ~= 'number' or args[1] < minimum_interval then
+            windower.add_to_chat(8, 'Cannot set interval lower than ' .. minimum_interval)
+        else
+            interval = args[1]
+            windower.add_to_chat(8, 'Interval set to ' .. interval)
+        end
     end
 end)
 
