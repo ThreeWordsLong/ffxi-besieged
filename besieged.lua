@@ -8,7 +8,7 @@ timer = timeit.new()
 interval = 300
 minimum_interval = 60
 requesting = false
-last_notification = nil
+last_notification = '' --set empty so the first notification is not an empty one
 
 beastman_statuses_map = {
     0 = 'Training',
@@ -57,27 +57,27 @@ windower.register_event('incoming chunk', function(id, packet)
         local besieged_statuses = parse_besieged_packet(packet)
 
         if besieged_statuses.mamool == 'Attacking' then
-            notification = 'The Mamool Ja Savages are attacking Al Zahbi!\n'
+            notification = 'Level ' .. besieged_statuses.mamool_level .. ' Mamool Ja Savages are attacking Al Zahbi!\n'
         end
 
         if besieged_statuses.trolls == 'Attacking' then
-            notification = notification .. 'The Troll Mercenaries are attacking Al Zahbi!\n'
+            notification = notification .. 'Level ' .. besieged_statuses.trolls_level .. ' Troll Mercenaries are attacking Al Zahbi!\n'
         end
 
         if besieged_statuses.llamia == 'Attacking' then
-            notification = notification .. 'The Undead Swarm are attacking Al Zahbi!\n'
+            notification = notification .. 'Level ' .. besieged_statuses.llamia_level .. ' Undead Swarm are attacking Al Zahbi!\n'
         end
 
         if besieged_statuses.mamool == 'Advancing' then
-            notification = notification .. 'The Mamool Ja Savages are advancing towards Al Zahbi!\n'
+            notification = notification .. 'Level ' .. besieged_statuses.mamool_level .. ' Mamool Ja Savages are advancing towards Al Zahbi!\n'
         end
 
         if besieged_statuses.trolls == 'Advancing' then
-            notification = notification .. 'The Troll Mercenaries are advancing towards Al Zahbi!\n'
+            notification = notification .. 'Level ' .. besieged_statuses.trolls_level .. ' Troll Mercenaries are advancing towards Al Zahbi!\n'
         end
 
         if besieged_statuses.llamia == 'Advancing' then
-            notification = notification .. 'The Undead Swarm are advancing towards Al Zahbi!\n'
+            notification = notification .. 'Level ' .. besieged_statuses.llamia_level .. ' Undead Swarm are advancing towards Al Zahbi!\n'
         end
 
         if notification then
@@ -101,14 +101,20 @@ end
 function parse_besieged_packet(packet)
     local mamool_status_code = packet:byte(0) --define packet ID
     local mamool_status = beastman_status_map[mamool_status_code]
+    local mamool_level = packet:byte(0) / 1 --define packet ID and divisor
     local trolls_status_code = packet:byte(0) --define packet ID
     local trolls_status = beastman_status_map[trolls_status_code]
+    local trolls_level = packet:byte(0) / 1 --define packet ID and divisor
     local llamia_status_code = packet:byte(0) --define packet ID
     local llamia_status = beastman_status_map[llamia_status_code]
+    local llamia_level = packet:byte(0) / 1 --define packet ID and divisor
 
     return {
         mamool = mamool_status,
+        mamool_level = mamool_level,
         trolls = trolls_status,
+        trolls_level = trolls_level,
         llamia = llamia_status,
+        llamia_level = llamia_level,
     }
 end
