@@ -1,4 +1,7 @@
 # ffxi-besieged
+
+*Work in progress - This addon requests data from the server and has not been fully tested. Use at your own discretion.*
+
 An FFXI Windower 4 addon that alerts when Besieged events are happening.
 
 ## Running
