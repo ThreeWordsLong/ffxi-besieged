@@ -10,7 +10,7 @@ require('common')
 addon.name = 'Besieged'
 addon.author  = 'Original: Dean James (Xurion of Bismarck), ported by Knautz'
 addon.version = '0.0.1'
-addon.desc    = 'ChocoRun Addon';
+addon.desc    = 'Alerts when Besieged events are happening';
 addon.link    = 'https://github.com/ThreeWordsLong/ffxi-besieged';
 addon.aliases = T{'/bs', '/besieged'}
 addon.commands = T{
