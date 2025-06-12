@@ -4,6 +4,8 @@
 
 An Ashita4 port of Xurion's ffxi-beseiged addon.
 
+Still trying to sort out the packet data, doesn't seem to be quite right.
+
 ## Running
 Copy the addon to `addons/besieged/besieged.lua` in the Ashita install directory. Then run `/addon load besieged` in game.
 

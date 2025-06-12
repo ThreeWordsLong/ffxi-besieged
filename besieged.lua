@@ -104,11 +104,14 @@ local function parse_besieged_packet(packet)
     local mamool_level = data:byte(0x009E + 1)
     local troll_level  = data:byte(0x00A1 + 1)  
     local lamia_level  = data:byte(0x009F + 1)
+    local imperial_standing = data:byte(0x00B0 + 1) + bit.lshift(data:byte(0x00B0 + 2), 8)
+
 
     return {
         mamool = { status = beastman_status_map[mamool_status], level = mamool_level },
         trolls = { status = beastman_status_map[troll_status],  level = troll_level },
         lamia  = { status = beastman_status_map[lamia_status],  level = lamia_level },
+        imperial_standing = imperial_standing
     }
 end
 
@@ -311,6 +314,8 @@ ashita.events.register('d3d_present', 'beseiged_hex_ui', function()
         }) do
             imgui.Text(string.format('%-12s Lv %d  (%s)', name, info.level, info.status))
         end
+
+        imgui.Text(string.format('Imperial Standing: %d', parsed.imperial_standing))
 
         imgui.Separator()
 
