@@ -157,6 +157,16 @@ local function print_help()
     log("Available commands:%s", addon.commands)
 end
 
+ffi.cdef[[
+int __stdcall PlaySoundA(const char* pszSound, void* hmod, unsigned int fdwSound);
+]]
+local winmm = ffi.load("winmm")
+local function play_sound(sound)
+    local flags = 0x00020001  -- SND_FILENAME | SND_ASYNC
+    winmm.PlaySoundA(string.format('%s\\sounds\\%s.wav', addon.path, sound), nil, flags)
+end
+
+
 local orders_map = {
     [0] = 'Defend Al Zahbi',
     [1] = 'Intercept Enemy',
@@ -401,6 +411,7 @@ local function handle_besieged_packet(packet)
         if notification ~= besieged.last_notification then
             besieged.last_notification = notification
             log(notification)
+            play_sound('alert')
         end
 
     else
@@ -526,6 +537,10 @@ local function render_ui()
         imgui.End()
     end
 end
+
+
+
+
 
 
 ashita.events.register('load', 'load_'..addon.name:lower(), function ()
