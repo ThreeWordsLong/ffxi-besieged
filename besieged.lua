@@ -169,7 +169,6 @@ local function play_sound(sound)
     winmm.PlaySoundA(string.format('%s\\sounds\\%s.wav', addon.path, sound), nil, flags)
 end
 
-play_sound('alert')
 local orders_map = {
     [0] = 'Defend Al Zahbi',
     [1] = 'Intercept Enemy',
