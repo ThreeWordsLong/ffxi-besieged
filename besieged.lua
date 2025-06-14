@@ -13,7 +13,7 @@ addon.version = '1.0.0'
 addon.desc    = 'Alerts when Besieged events are happening';
 addon.link    = 'https://github.com/ThreeWordsLong/ffxi-besieged';
 addon.aliases = T{'/bs', '/besieged'}
-addon.commands = T{
+addon.commands = {
     ['Help'] = 'Prints out available commands.',
     ['Debug'] = 'Toggles debug logging.',
     ['Interval'] = 'Sets the interval for checking Besieged status in seconds.',
@@ -154,8 +154,11 @@ local debug = logger.debug
 
 local function print_help()
     log("Usage: %s [command]", addon.aliases[1])
-    log("Available commands:%s", addon.commands)
+    log("Available commands:")
+    log(addon.commands)
 end
+
+
 
 ffi.cdef[[
 int __stdcall PlaySoundA(const char* pszSound, void* hmod, unsigned int fdwSound);
@@ -166,7 +169,7 @@ local function play_sound(sound)
     winmm.PlaySoundA(string.format('%s\\sounds\\%s.wav', addon.path, sound), nil, flags)
 end
 
-
+play_sound('alert')
 local orders_map = {
     [0] = 'Defend Al Zahbi',
     [1] = 'Intercept Enemy',
