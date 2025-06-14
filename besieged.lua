@@ -413,7 +413,7 @@ local function handle_besieged_packet(packet)
         if notification ~= besieged.last_notification then
             besieged.last_notification = notification
             log(notification)
-            play_sound('alert')
+            ashita.misc.play_sound(string.format('%s\\sounds\\%s.wav', addon.path, 'alert'))
         end
 
     else
@@ -421,6 +421,7 @@ local function handle_besieged_packet(packet)
         debug('Trolls [' .. besieged_status.trolls.level .. ']  Mamool Ja [' .. besieged_status.mamool.level .. ']  Lamia [' .. besieged_status.lamia.level .. ']')
     end
 end
+
 
 local function request_besieged_data()
     debug('Requesting Besieged data from server')
