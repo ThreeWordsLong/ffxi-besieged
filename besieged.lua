@@ -158,17 +158,6 @@ local function print_help()
     log(addon.commands)
 end
 
-
-
-ffi.cdef[[
-int __stdcall PlaySoundA(const char* pszSound, void* hmod, unsigned int fdwSound);
-]]
-local winmm = ffi.load("winmm")
-local function play_sound(sound)
-    local flags = 0x00020001  -- SND_FILENAME | SND_ASYNC
-    winmm.PlaySoundA(string.format('%s\\sounds\\%s.wav', addon.path, sound), nil, flags)
-end
-
 local orders_map = {
     [0] = 'Defend Al Zahbi',
     [1] = 'Intercept Enemy',
